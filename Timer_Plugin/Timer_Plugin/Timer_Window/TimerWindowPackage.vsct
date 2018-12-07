@@ -31,13 +31,24 @@
     group; your package should define its own command set in order to avoid collisions
     with command ids defined by other packages. -->
 
+    <Menus>
+      <Menu guid="guidTimerWindowPackageCmdSet" id="TopLevelMenu" priority="0x700" type="Menu">
+        <Parent guid="guidSHLMainMenu"
+                id="IDG_VS_MM_TOOLSADDINS" />
+        <Strings>
+          <ButtonText>Справка о времени</ButtonText>
+          <CommandName>Справка о времени</CommandName>
+        </Strings>
+      </Menu>
+    </Menus>
+
     <!-- In this section you can define new menu groups. A menu group is a container for
          other menus or buttons (commands); from a visual point of view you can see the
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
     <Groups>
       <Group guid="guidTimerWindowPackageCmdSet" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+        <Parent guid="guidTimerWindowPackageCmdSet" id="TopLevelMenu"/>
       </Group>
     </Groups>
 
@@ -55,8 +66,9 @@
       <Button guid="guidTimerWindowPackageCmdSet" id="TimerWindowId" priority="0x0100" type="Button">
         <Parent guid="guidTimerWindowPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <ButtonText>Invoke TimerWindow</ButtonText>
+          <ButtonText>Время</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -80,6 +92,7 @@
     <GuidSymbol name="guidTimerWindowPackageCmdSet" value="{a6fb0a45-8ce0-4cbc-b264-fc852dd1bc5f}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
       <IDSymbol name="TimerWindowId" value="0x0100" />
+      <IDSymbol name="TopLevelMenu" value="0x1021"/>
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{0af58b21-723a-443a-bf75-999de79459f9}" >

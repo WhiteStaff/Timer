@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
+using System.Timers;
 
 namespace Timer_Plugin.Timer_Window
 {
@@ -86,20 +87,39 @@ namespace Timer_Plugin.Timer_Window
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
+        /// 
+
+        string aa = DateTime.Now.ToString("HH:mm:ss");
         private void Execute(object sender, EventArgs e)
         {
+             System.Timers.Timer aTimer;
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
             string title = "TimerWindow";
 
-            // Show a message box to prove we were here
+
             VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            this.package,
+            aa,
+            title,
+            OLEMSGICON.OLEMSGICON_INFO,
+            OLEMSGBUTTON.OLEMSGBUTTON_OK,
+            OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+
+            aTimer = new System.Timers.Timer(200);
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+
+            
+
+            
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
         }
     }
 }
