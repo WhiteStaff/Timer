@@ -30,6 +30,15 @@ namespace Timer_Plugin.Timer_Window
         /// </summary>
         private readonly AsyncPackage package;
 
+        private void OnBeforeQueryStatus(object sender, EventArgs e)
+        {
+            var myCommand = sender as OleMenuCommand;
+            if (null != myCommand)
+            {
+                myCommand.Text = "New Text";
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TimerWindow"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
@@ -42,8 +51,12 @@ namespace Timer_Plugin.Timer_Window
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuItem = new MenuCommand(this.Execute, menuCommandID);
+            EventHandler eventHandler = this.ShowMessageBox;
+            var menuItem = new MenuCommand(ShowMessageBox, menuCommandID);
+            menuItem.BeforeQueryStatus +=
+            new EventHandler(OnBeforeQueryStatus);
             commandService.AddCommand(menuItem);
+
         }
 
         /// <summary>
@@ -78,6 +91,22 @@ namespace Timer_Plugin.Timer_Window
 
             OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
             Instance = new TimerWindow(package, commandService);
+
+
+        }
+
+        public void ShowMessageBox(object sender, EventArgs e)
+        {
+
+            string title = "TimerWindow";
+
+            VsShellUtilities.ShowMessageBox(
+              this.package,
+              aa,
+              title,
+              OLEMSGICON.OLEMSGICON_INFO,
+              OLEMSGBUTTON.OLEMSGBUTTON_OK,
+              OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
         }
 
         /// <summary>
@@ -107,10 +136,10 @@ namespace Timer_Plugin.Timer_Window
             OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 
 
-            aTimer = new System.Timers.Timer(200);
+           /* aTimer = new System.Timers.Timer(200);
             aTimer.Elapsed += OnTimedEvent;
             aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+            aTimer.Enabled = true;*/
 
             
 
