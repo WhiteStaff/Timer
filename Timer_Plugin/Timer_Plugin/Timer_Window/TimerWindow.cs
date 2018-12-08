@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 using System.Timers;
+using System.Xml;
 
 namespace Timer_Plugin.Timer_Window
 {
@@ -44,8 +45,9 @@ namespace Timer_Plugin.Timer_Window
             var menuCommandID = new CommandID(CommandSet, CommandId);
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(menuItem);
+            
         }
-
+        
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
@@ -89,34 +91,29 @@ namespace Timer_Plugin.Timer_Window
         /// <param name="e">Event args.</param>
         /// 
 
-        string aa = DateTime.Now.ToString("HH:mm:ss");
+        
         private void Execute(object sender, EventArgs e)
         {
-             System.Timers.Timer aTimer;
+            // System.Timers.Timer aTimer;
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
             string title = "TimerWindow";
 
 
-            VsShellUtilities.ShowMessageBox(
-            this.package,
-            aa,
-            title,
-            OLEMSGICON.OLEMSGICON_INFO,
-            OLEMSGBUTTON.OLEMSGBUTTON_OK,
-            OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            /* VsShellUtilities.ShowMessageBox(
+             this.package,
+             DateTime.Now.ToString("HH:mm:ss"),
+             title,
+             OLEMSGICON.OLEMSGICON_INFO,
+             OLEMSGBUTTON.OLEMSGBUTTON_OK,
+             OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);*/
+            Time_Form newForm1 = new Time_Form();
+            newForm1.Show();
 
-
-            aTimer = new System.Timers.Timer(200);
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
-
-            
-
-            
         }
 
+        
+        
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss"));

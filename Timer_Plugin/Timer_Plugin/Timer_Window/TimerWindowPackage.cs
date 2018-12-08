@@ -12,6 +12,9 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 using Task = System.Threading.Tasks.Task;
+using System.Windows;
+using System.Xml;
+using System.Xml.XPath;
 
 namespace Timer_Plugin.Timer_Window
 {
@@ -44,11 +47,31 @@ namespace Timer_Plugin.Timer_Window
         /// </summary>
         public const string PackageGuidString = "d8e1aa18-381f-4418-94bb-2bfe851d4203";
 
+       /* public void TimeUpdate()
+        {
+            XmlDocument document = new XmlDocument();
+            document.Load("TimerWindowPackage.vsct");
+            XPathNavigator navigator = document.CreateNavigator();
+
+            XmlNamespaceManager manager = new XmlNamespaceManager(navigator.NameTable);
+            manager.AddNamespace("bk", "http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable");
+
+            foreach (XPathNavigator nav in navigator.Select("//bk:ButtonText", manager))
+            {
+                if (nav.Value != "Справка о времени")
+                {
+                    nav.SetValue(DateTime.Now.ToString("HH:mm:ss"));
+                }
+            }
+        }*/
+        
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="TimerWindowPackage"/> class.
         /// </summary>
         public TimerWindowPackage()
         {
+           // TimeUpdate();
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but
             // not sited yet inside Visual Studio environment. The place to do all the other
