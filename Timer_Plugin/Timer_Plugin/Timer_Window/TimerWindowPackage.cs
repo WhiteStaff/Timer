@@ -44,29 +44,47 @@ namespace Timer_Plugin.Timer_Window
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(TimerWindowPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class TimerWindowPackage : AsyncPackage
+    [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string)]
+    public sealed class TimerWindowPackage : AsyncPackage, IVsSolutionEvents
     {
         /// <summary>
         /// TimerWindowPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "d8e1aa18-381f-4418-94bb-2bfe851d4203";
-        
+        public static int timer_time = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimerWindowPackage"/> class.
         /// </summary>
+        /// 
         public TimerWindowPackage()
         {
+            
             Initialize();
-            string PrName = Assembly.GetCallingAssembly().GetName().Name;
-            MessageBox.Show(PrName);
-            //int sfdg = 0;
+            TimerCallback tm = new TimerCallback(write_tick);
+            System.Threading.Timer timer = new System.Threading.Timer(tm, 0, 0, 1000);
+           
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but
             // not sited yet inside Visual Studio environment. The place to do all the other
             // initialization is the Initialize method.
         }
+        
+        public int OnAfterOpenSolution(object pUnkReserved, int fNewSolution)
+        {
+            MessageBox.Show("Opened a solution!");
+            return VSConstants.S_OK;
+        }
 
+
+        private void write_tick(object sender)
+        {
+            timer_time += 1;
+            //Time_Form.label1.Text = timer_time.ToString();
+            //dt = dt.AddSeconds(1);
+            //int current_time = dt.Second + dt.Minute * 60 + dt.Hour * 3600;
+            //data.WriteToFile(current_time);
+        }
         #region Package Members
 
         /// <summary>
@@ -81,9 +99,60 @@ namespace Timer_Plugin.Timer_Window
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-            await TimerWindow.InitializeAsync(this);
+            await Time_Form.InitializeAsync(this);
+            IVsSolution solution = GetService(typeof(SVsSolution)) as IVsSolution;
+            uint cookie = 0;
+            solution.AdviseSolutionEvents(this, out cookie);
+
+        }
+
+        public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
+        {
+            MessageBox.Show("Opened a project!");
+            return VSConstants.S_OK;
+        }
+
+        public int OnQueryCloseProject(IVsHierarchy pHierarchy, int fRemoving, ref int pfCancel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OnBeforeCloseProject(IVsHierarchy pHierarchy, int fRemoved)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OnAfterLoadProject(IVsHierarchy pStubHierarchy, IVsHierarchy pRealHierarchy)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OnQueryUnloadProject(IVsHierarchy pRealHierarchy, ref int pfCancel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OnBeforeUnloadProject(IVsHierarchy pRealHierarchy, IVsHierarchy pStubHierarchy)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OnQueryCloseSolution(object pUnkReserved, ref int pfCancel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OnBeforeCloseSolution(object pUnkReserved)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OnAfterCloseSolution(object pUnkReserved)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
     }
+    
 }
