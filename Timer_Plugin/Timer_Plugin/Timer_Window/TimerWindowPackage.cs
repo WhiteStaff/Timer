@@ -14,7 +14,8 @@ using Microsoft.Win32;
 using Task = System.Threading.Tasks.Task;
 using System.Windows;
 using System.Xml;
-using System.Xml.XPath;
+
+
 
 namespace Timer_Plugin.Timer_Window
 {
@@ -36,7 +37,10 @@ namespace Timer_Plugin.Timer_Window
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+
+    //[ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
+    
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(TimerWindowPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
@@ -46,32 +50,14 @@ namespace Timer_Plugin.Timer_Window
         /// TimerWindowPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "d8e1aa18-381f-4418-94bb-2bfe851d4203";
-
-       /* public void TimeUpdate()
-        {
-            XmlDocument document = new XmlDocument();
-            document.Load("TimerWindowPackage.vsct");
-            XPathNavigator navigator = document.CreateNavigator();
-
-            XmlNamespaceManager manager = new XmlNamespaceManager(navigator.NameTable);
-            manager.AddNamespace("bk", "http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable");
-
-            foreach (XPathNavigator nav in navigator.Select("//bk:ButtonText", manager))
-            {
-                if (nav.Value != "Справка о времени")
-                {
-                    nav.SetValue(DateTime.Now.ToString("HH:mm:ss"));
-                }
-            }
-        }*/
         
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TimerWindowPackage"/> class.
         /// </summary>
         public TimerWindowPackage()
         {
-           // TimeUpdate();
+            //int sfdg = 0;
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but
             // not sited yet inside Visual Studio environment. The place to do all the other

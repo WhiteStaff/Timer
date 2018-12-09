@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
-using System.Timers;
+using Timer_Plugin.Timer_Window.Data;
 using System.Xml;
 
 namespace Timer_Plugin.Timer_Window
@@ -14,13 +14,15 @@ namespace Timer_Plugin.Timer_Window
     /// <summary>
     /// Command handler
     /// </summary>
+    /// 
+    
     internal sealed class TimerWindow
     {
         /// <summary>
         /// Command ID.
         /// </summary>
         public const int CommandId = 0x0100;
-
+        
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
@@ -37,6 +39,9 @@ namespace Timer_Plugin.Timer_Window
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
+        /// 
+        OpenData data = new OpenData();
+        DateTime dt = new DateTime();
         private TimerWindow(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
@@ -45,9 +50,27 @@ namespace Timer_Plugin.Timer_Window
             var menuCommandID = new CommandID(CommandSet, CommandId);
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(menuItem);
+
             
+            int time = data.OpenMyData();
+            dt = dt.AddHours(time / 3600);
+            dt = dt.AddMinutes(time % 3600 / 60);
+            time = time % 3600 / 60;
+            dt = dt.AddSeconds(time % 60);
+
+            TimerCallback tm = new TimerCallback(write_tick);
+            // создаем таймер
+            Timer timer = new Timer(tm, 0, 0, 1000);
+
         }
-        
+
+        private void write_tick(object sender)
+        {
+            dt = dt.AddSeconds(1);           
+            int current_time = dt.Second + dt.Minute * 60 + dt.Hour * 3600;
+            //data.WriteToFile(current_time.ToString());
+        }
+
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
@@ -114,9 +137,9 @@ namespace Timer_Plugin.Timer_Window
 
         
         
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        /*private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
-        }
+        }*/
     }
 }
