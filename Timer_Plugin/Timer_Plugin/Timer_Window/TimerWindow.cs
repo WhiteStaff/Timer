@@ -8,6 +8,8 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 using Timer_Plugin.Timer_Window.Data;
 using System.Xml;
+using Microsoft.VisualStudio;
+using System.Windows.Forms;
 
 namespace Timer_Plugin.Timer_Window
 {
@@ -16,7 +18,7 @@ namespace Timer_Plugin.Timer_Window
     /// </summary>
     /// 
     
-    internal sealed class TimerWindow
+    internal sealed class Time_Form
     {
         /// <summary>
         /// Command ID.
@@ -34,7 +36,7 @@ namespace Timer_Plugin.Timer_Window
         private readonly AsyncPackage package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TimerWindow"/> class.
+        /// Initializes a new instance of the <see cref="Time_Form"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
@@ -42,7 +44,8 @@ namespace Timer_Plugin.Timer_Window
         /// 
         OpenData data = new OpenData();
         DateTime dt = new DateTime();
-        private TimerWindow(AsyncPackage package, OleMenuCommandService commandService)
+       // public static Time_Form winform = new Time_Form();
+        private Time_Form(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -51,34 +54,18 @@ namespace Timer_Plugin.Timer_Window
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(menuItem);
 
-            
-            int time = data.OpenMyData();
-            dt = dt.AddHours(time / 3600);
-            dt = dt.AddMinutes(time % 3600 / 60);
-            time = time % 3600 / 60;
-            dt = dt.AddSeconds(time % 60);
-
-            TimerCallback tm = new TimerCallback(write_tick);
-            // создаем таймер
-            Timer timer = new Timer(tm, 0, 0, 1000);
-
         }
 
-        private void write_tick(object sender)
-        {
-            dt = dt.AddSeconds(1);           
-            int current_time = dt.Second + dt.Minute * 60 + dt.Hour * 3600;
-            //data.WriteToFile(current_time.ToString());
-        }
-
+        
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static TimerWindow Instance
+        public static Time_Form Instance
         {
             get;
             private set;
         }
+        
 
         /// <summary>
         /// Gets the service provider from the owner package.
@@ -102,7 +89,7 @@ namespace Timer_Plugin.Timer_Window
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
-            Instance = new TimerWindow(package, commandService);
+            Instance = new Time_Form(package, commandService);
         }
 
         /// <summary>
@@ -120,26 +107,22 @@ namespace Timer_Plugin.Timer_Window
             // System.Timers.Timer aTimer;
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "TimerWindow";
-
-
-            /* VsShellUtilities.ShowMessageBox(
-             this.package,
-             DateTime.Now.ToString("HH:mm:ss"),
-             title,
-             OLEMSGICON.OLEMSGICON_INFO,
-             OLEMSGBUTTON.OLEMSGBUTTON_OK,
-             OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);*/
-            Time_Form newForm1 = new Time_Form();
+            
+            
+            Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();
             newForm1.Show();
+           
 
         }
+        
 
-        
-        
+
+
+
         /*private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
         }*/
+        public int sadfg = 0;
     }
 }

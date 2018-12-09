@@ -55,6 +55,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Timer_Window\Data\Converter.cs" />
     <Compile Include="Timer_Window\Data\OpenData.cs" />
     <Compile Include="Timer_Window\TimerWindow.cs" />
     <Compile Include="Timer_Window\TimerWindowPackage.cs" />

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
+using System.Windows.Forms;
 
 namespace Timer_Plugin.Timer_Window.Data
 {
@@ -14,52 +15,57 @@ namespace Timer_Plugin.Timer_Window.Data
     {
         [DataMember]
         public int Mytime { get; set; }
+        [DataMember]
+        public DateTime Mydate { get; set;}
         
-        public Time(int time)
+        public Time(DateTime date, int time)
         {
+            Mydate = date;
             Mytime = time;
         }
+        
     }
 
     class OpenData
     {
-        public int OpenMyData()
+
+        static DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Time[]));
+        public static int OpenMyData()
         {
             int TimeData=0;
-            /*using (FileStream fstream = File.OpenRead(@"H:\проекты\Timer_Plugin\Timer_Plugin\Timer_Plugin\input.bin"))
+            //WriteToFile();
+            using (FileStream fs = new FileStream("TimeData.json", FileMode.OpenOrCreate))
             {
-                byte[] array = new byte[fstream.Length];
-                // считываем данные
-                fstream.Read(array, 0, array.Length);
-                // декодируем байты в строку
-                string textFromFile = System.Text.Encoding.Default.GetString(array);
-                TimeData = Int32.Parse(textFromFile);
-                fstream.Close();
-            }*/
-            
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Time[]));
-
-            using (FileStream fs = new FileStream("people.json", FileMode.OpenOrCreate))
-            {
-                Time[] newpeople = (Time[])jsonFormatter.ReadObject(fs);
-
-                foreach (Time p in newpeople)
+                try
                 {
-                    TimeData = p.Mytime;
+                    Time[] newpeople = (Time[])jsonFormatter.ReadObject(fs);
+                    int sfgdsf = 0;
+                    foreach (Time p in newpeople)
+                    {
+                        TimeData = p.Mytime;
+                        sfgdsf++;
+                    }
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show(e.Message);
                 }
             }
 
             return (TimeData);
         }   
 
-        public void WriteToFile(string data)
+        public static void WriteToFile(DateTime date, int data)
         {
-            using (FileStream fstream = new FileStream(@"H:\проекты\Timer_Plugin\Timer_Plugin\Timer_Plugin\input.bin", FileMode.OpenOrCreate))
+            /*DateTime date1 = DateTime.Now.Date;
+            DateTime date2 = new DateTime(2008, 3, 1, 7, 0, 0).Date;*/
+            
+            Time time1 = new Time(date, data);
+            //Time time2 = new Time(date2, 23842);
+            Time[] times = new Time[] { time1 };
+            using (FileStream fs = new FileStream("TimeData.json", FileMode.OpenOrCreate))
             {
-                // преобразуем строку в байты
-                byte[] array = System.Text.Encoding.Default.GetBytes(data);
-                // запись массива байтов в файл
-                fstream.Write(array, 0, array.Length);
+                jsonFormatter.WriteObject(fs, times);
                 
             }
         }
