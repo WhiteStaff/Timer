@@ -54,6 +54,7 @@ namespace Timer_Plugin.Timer_Window
         public const string PackageGuidString = "d8e1aa18-381f-4418-94bb-2bfe851d4203";
         public static int timer_time = 0;
         private static Stopwatch s = new Stopwatch();
+        public static bool IsSolutionOpened = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimerWindowPackage"/> class.
@@ -82,6 +83,7 @@ namespace Timer_Plugin.Timer_Window
         {
             
             s.Start();
+            IsSolutionOpened = true;
             //MessageBox.Show("Opened a solution!");
             return VSConstants.S_OK;
         }
@@ -156,8 +158,9 @@ namespace Timer_Plugin.Timer_Window
         public int OnBeforeCloseSolution(object pUnkReserved)
         {
             s.Stop();
+            IsSolutionOpened = false;
             int time = OpenData.OpenMyData();
-            OpenData.WriteToFile(s.Elapsed.Seconds+time);
+            OpenData.WriteToFile(DateTime.Now.Date, s.Elapsed.Seconds+time);
             return VSConstants.S_OK;
         }
 

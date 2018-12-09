@@ -33,13 +33,12 @@
             // 
             // label1
             // 
+            this.label1.AutoEllipsis = true;
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(342, 202);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(410, 130);
+            this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "";
-            
             // 
             // Time_Form
             // 

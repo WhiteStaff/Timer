@@ -16,29 +16,33 @@ namespace Timer_Plugin
 {
     public partial class Time_Form : Form
     {
-        int current_time;
+        private DateTime current_datetime = new DateTime();
         
         public Time_Form()
-        {          
+        {
             InitializeComponent();
-            current_time  = TimerWindowPackage.GetCurrentTime();
-            label1.Text = current_time.ToString();
-            Timer timer = new Timer();
-            timer.Interval = 1000;
-            timer.Enabled = true;
-            timer.Tick += new EventHandler(write_tick);
-            
 
-
+            if (TimerWindowPackage.IsSolutionOpened)
+            {
+                int current_time = 0;                
+                current_time = TimerWindowPackage.GetCurrentTime();
+                current_datetime = Converter.TimeConverter(current_time);
+                label1.Text = current_datetime.ToString("HH:mm:ss");
+                Timer timer = new Timer();
+                timer.Interval = 1000;
+                timer.Enabled = true;
+                timer.Tick += new EventHandler(write_tick);
+            }
+            else
+            {
+                label1.Text = "Для отслеживания времени необходимо войти в проект";
+            } 
         }
 
         private void write_tick(object sender, EventArgs e)
         {
-            current_time++;
-            
-            label1.Text = current_time.ToString();
-
-
+            current_datetime = current_datetime.AddSeconds(1);
+            label1.Text = current_datetime.ToString("HH:mm:ss");
         }
 
 
