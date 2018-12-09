@@ -14,8 +14,8 @@ using Microsoft.Win32;
 using Task = System.Threading.Tasks.Task;
 using System.Windows;
 using System.Xml;
-
-
+using System.Windows.Forms;
+using System.Reflection;
 
 namespace Timer_Plugin.Timer_Window
 {
@@ -38,7 +38,7 @@ namespace Timer_Plugin.Timer_Window
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
 
-    //[ProvideAutoLoad(UIContextGuids80.SolutionExists)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     
     [ProvideMenuResource("Menus.ctmenu", 1)]
@@ -57,6 +57,9 @@ namespace Timer_Plugin.Timer_Window
         /// </summary>
         public TimerWindowPackage()
         {
+            Initialize();
+            string PrName = Assembly.GetCallingAssembly().GetName().Name;
+            MessageBox.Show(PrName);
             //int sfdg = 0;
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but

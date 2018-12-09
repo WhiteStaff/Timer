@@ -51,7 +51,6 @@ namespace Timer_Plugin.Timer_Window
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(menuItem);
 
-            
             int time = data.OpenMyData();
             dt = dt.AddHours(time / 3600);
             dt = dt.AddMinutes(time % 3600 / 60);
@@ -61,6 +60,13 @@ namespace Timer_Plugin.Timer_Window
             TimerCallback tm = new TimerCallback(write_tick);
             // создаем таймер
             Timer timer = new Timer(tm, 0, 0, 1000);
+           /* VsShellUtilities.ShowMessageBox(
+                this.package,
+                "1221",
+                "ыыыы",            
+                OLEMSGICON.OLEMSGICON_INFO,
+                OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);*/
 
         }
 
@@ -68,7 +74,7 @@ namespace Timer_Plugin.Timer_Window
         {
             dt = dt.AddSeconds(1);           
             int current_time = dt.Second + dt.Minute * 60 + dt.Hour * 3600;
-            //data.WriteToFile(current_time.ToString());
+            data.WriteToFile(current_time);
         }
 
         /// <summary>
