@@ -25,8 +25,8 @@ namespace Timer_Plugin.Timer_Window.Data
     class OpenData
     {
 
-        DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Time[]));
-        public int OpenMyData()
+        static DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Time[]));
+        public static int OpenMyData()
         {
             int TimeData=0;
             /*using (FileStream fstream = File.OpenRead(@"H:\проекты\Timer_Plugin\Timer_Plugin\Timer_Plugin\input.bin"))
@@ -63,9 +63,8 @@ namespace Timer_Plugin.Timer_Window.Data
             return (TimeData);
         }   
 
-        public void WriteToFile(int data)
+        public static void WriteToFile(int data)
         {
-
             Time time1 = new Time(data);
             Time[] times = new Time[] { time1 };
             using (FileStream fs = new FileStream("TimeData.json", FileMode.OpenOrCreate))

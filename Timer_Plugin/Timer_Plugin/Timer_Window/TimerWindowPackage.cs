@@ -16,6 +16,7 @@ using System.Windows;
 using System.Xml;
 using System.Windows.Forms;
 using System.Reflection;
+using Timer_Plugin.Timer_Window.Data;
 
 namespace Timer_Plugin.Timer_Window
 {
@@ -52,6 +53,7 @@ namespace Timer_Plugin.Timer_Window
         /// </summary>
         public const string PackageGuidString = "d8e1aa18-381f-4418-94bb-2bfe851d4203";
         public static int timer_time = 0;
+        private static Stopwatch s = new Stopwatch();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimerWindowPackage"/> class.
@@ -61,18 +63,26 @@ namespace Timer_Plugin.Timer_Window
         {
             
             Initialize();
-            TimerCallback tm = new TimerCallback(write_tick);
-            System.Threading.Timer timer = new System.Threading.Timer(tm, 0, 0, 1000);
+            
            
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but
             // not sited yet inside Visual Studio environment. The place to do all the other
             // initialization is the Initialize method.
         }
+
+        public static int GetCurrentTime()
+        {
+            int time = OpenData.OpenMyData();
+            return s.Elapsed.Seconds + time;
+            
+        }
         
         public int OnAfterOpenSolution(object pUnkReserved, int fNewSolution)
         {
-            MessageBox.Show("Opened a solution!");
+            
+            s.Start();
+            //MessageBox.Show("Opened a solution!");
             return VSConstants.S_OK;
         }
 
@@ -108,48 +118,52 @@ namespace Timer_Plugin.Timer_Window
 
         public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
         {
-            MessageBox.Show("Opened a project!");
+            
+            //MessageBox.Show("Opened a project!");
             return VSConstants.S_OK;
         }
 
         public int OnQueryCloseProject(IVsHierarchy pHierarchy, int fRemoving, ref int pfCancel)
         {
-            throw new NotImplementedException();
+            return VSConstants.S_OK;
         }
 
         public int OnBeforeCloseProject(IVsHierarchy pHierarchy, int fRemoved)
         {
-            throw new NotImplementedException();
+            return VSConstants.S_OK;
         }
 
         public int OnAfterLoadProject(IVsHierarchy pStubHierarchy, IVsHierarchy pRealHierarchy)
         {
-            throw new NotImplementedException();
+            return VSConstants.S_OK;
         }
 
         public int OnQueryUnloadProject(IVsHierarchy pRealHierarchy, ref int pfCancel)
         {
-            throw new NotImplementedException();
+            return VSConstants.S_OK;
         }
 
         public int OnBeforeUnloadProject(IVsHierarchy pRealHierarchy, IVsHierarchy pStubHierarchy)
         {
-            throw new NotImplementedException();
+            return VSConstants.S_OK;
         }
 
         public int OnQueryCloseSolution(object pUnkReserved, ref int pfCancel)
         {
-            throw new NotImplementedException();
+            return VSConstants.S_OK;
         }
 
         public int OnBeforeCloseSolution(object pUnkReserved)
         {
-            throw new NotImplementedException();
+            s.Stop();
+            int time = OpenData.OpenMyData();
+            OpenData.WriteToFile(s.Elapsed.Seconds+time);
+            return VSConstants.S_OK;
         }
 
         public int OnAfterCloseSolution(object pUnkReserved)
         {
-            throw new NotImplementedException();
+            return VSConstants.S_OK;
         }
 
         #endregion

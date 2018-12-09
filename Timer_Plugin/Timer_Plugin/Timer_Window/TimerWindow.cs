@@ -107,11 +107,11 @@ namespace Timer_Plugin.Timer_Window
             // System.Timers.Timer aTimer;
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "TimerWindow";
+            
             
             Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();
             newForm1.Show();
-            //OnAfterOpenSolution();
+           
 
         }
         
