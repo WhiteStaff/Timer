@@ -13,11 +13,12 @@ namespace Timer_Plugin.Timer_Window.Forms
 {
     public partial class DataForm : Form
     {
+        public static bool IsDataFormOpen = false;
         public DataForm()
         {
             
             InitializeComponent();
-            
+            IsDataFormOpen = true;
             foreach(var p in DataDictionary.time_dictionary)
             {
                 var last_value = p.Value;
@@ -35,14 +36,23 @@ namespace Timer_Plugin.Timer_Window.Forms
 
         private void Exit_info_Click(object sender, EventArgs e)
         {
-            Close();         
+            
+            Close();
+            IsDataFormOpen = false;
         }
 
         private void Go_to_timer_Click(object sender, EventArgs e)
         {
+            
             Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();
             newForm1.Show();
             Close();
+            IsDataFormOpen = false;
+        }
+
+        private void DataForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            IsDataFormOpen = false;
         }
     }
 }

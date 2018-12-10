@@ -110,7 +110,7 @@ namespace Timer_Plugin.Timer_Window
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
 
 
-            if (!Timer_Plugin.Time_Form.IsFormOpen)
+            if ((!Timer_Plugin.Time_Form.IsFormOpen) && (!Forms.DataForm.IsDataFormOpen))
             {
                 Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();
                 newForm1.Show();

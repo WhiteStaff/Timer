@@ -71,6 +71,7 @@
             this.Controls.Add(this.listBox1);
             this.Name = "DataForm";
             this.Text = "Сводка";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DataForm_FormClosed);
             this.ResumeLayout(false);
 
         }

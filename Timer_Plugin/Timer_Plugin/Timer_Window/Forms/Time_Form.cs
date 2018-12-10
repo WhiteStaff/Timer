@@ -30,6 +30,7 @@ namespace Timer_Plugin
             {
                 //Изменение данных метки
                 label1.Visible = true;
+                Data_button.Enabled = true;
                 label2.Text = "Проведено времени в Visual Studio сегодня:";
 
                 //Расчет времени и отображение в формате HH:mm:ss, конвертируя дни в часы
@@ -48,8 +49,10 @@ namespace Timer_Plugin
             }
             else
             {
-                label2.Text = "Для отслеживания времени необходимо войти в проект";
                 label1.Visible = false;
+                Data_button.Enabled = false;
+                label2.Text = "Для отслеживания времени необходимо войти в проект";
+                
             } 
         }
 

@@ -67,12 +67,6 @@
     <Compile Include="Timer_Window\Forms\DataForm.Designer.cs">
       <DependentUpon>DataForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Timer_Window\Forms\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Timer_Window\Forms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Timer_Window\TimerWindow.cs" />
     <Compile Include="Timer_Window\TimerWindowPackage.cs" />
     <Compile Include="Timer_Window\Forms\Time_Form.cs">
@@ -83,7 +77,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="input.bin" />
     <None Include="Key.snk" />
     <None Include="packages.config" />
     <None Include="source.extension.vsixmanifest">
