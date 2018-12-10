@@ -17,16 +17,18 @@ namespace Timer_Plugin
     public partial class Time_Form : Form
     {
         private DateTime current_datetime = new DateTime();
-        
+        public static bool IsFormOpen = false;
         public Time_Form()
         {
+
             InitializeComponent();
             
-
+            IsFormOpen = true;
             if (TimerWindowPackage.IsSolutionOpened)
             {
-                
-                
+
+                label1.Visible = true;
+                label2.Text = "Проведено времени в Visual Studio сегодня:";
                 int current_time = TimerWindowPackage.time + TimerWindowPackage.s.Elapsed.Seconds;
                 current_datetime = Converter.TimeConverterToDate(current_time);
                 label1.Text = current_datetime.ToString("HH:mm:ss");
@@ -37,7 +39,8 @@ namespace Timer_Plugin
             }
             else
             {
-                label1.Text = "Для отслеживания времени необходимо войти в проект";
+                label2.Text = "Для отслеживания времени необходимо войти в проект";
+                label1.Visible = false;
             } 
         }
 
@@ -47,8 +50,21 @@ namespace Timer_Plugin
             label1.Text = current_datetime.ToString("HH:mm:ss");
         }
 
+        private void Exit_button_Click(object sender, EventArgs e)
+        {
+            IsFormOpen = false;
+            Close();
+        }
 
+        private void Data_button_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        
+        private void Time_Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            IsFormOpen = false;
+        }
     }
 }

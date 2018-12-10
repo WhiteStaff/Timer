@@ -44,6 +44,7 @@ namespace Timer_Plugin.Timer_Window.Data
                         DataDictionary.time_dictionary.Add(p.Mydate.Date, p.Mytime);
                         if (p.Mydate.Date == current_date.Date)
                         {
+                            TimeData = p.Mytime;
                             IsDateExists = true;
                         }
                     }
@@ -64,12 +65,12 @@ namespace Timer_Plugin.Timer_Window.Data
             return (TimeData);
         }   
 
-        public static void WriteToFile(int time)
+        public static void WriteToFile(int curtime)
         {
             
             Time[] times = new Time[DataDictionary.time_dictionary.Count];
             DataDictionary.time_dictionary.Remove(DateTime.Now.Date);
-            Time newtime = new Time(DateTime.Now.Date, time);
+            Time newtime = new Time(DateTime.Now.Date, curtime);
             times[0] = newtime;
             for (int i = 0; i < DataDictionary.time_dictionary.Count; i++)
             {

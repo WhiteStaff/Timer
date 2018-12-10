@@ -67,6 +67,7 @@ namespace Timer_Plugin.Timer_Window
         }
         
 
+
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
@@ -101,16 +102,21 @@ namespace Timer_Plugin.Timer_Window
         /// <param name="e">Event args.</param>
         /// 
 
-       
+        
         private void Execute(object sender, EventArgs e)
         {
             // System.Timers.Timer aTimer;
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
 
-            
-            Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();            
-            newForm1.Show();            
+
+            if (!Timer_Plugin.Time_Form.IsFormOpen)
+            {
+                Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();
+                newForm1.Show();
+                
+            }
+
         }
     }
 }

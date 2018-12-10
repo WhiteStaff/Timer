@@ -30,17 +30,17 @@
     called "command set" and is used to group different command inside a logically related
     group; your package should define its own command set in order to avoid collisions
     with command ids defined by other packages. -->
-
-    <Menus>  
-    <Menu guid="guidTimerWindowPackageCmdSet" id="Toolbar"  
-        type="Toolbar" >  
-        <CommandFlag>DefaultDocked</CommandFlag>  
-        <Strings>  
-            <ButtonText>Timer_Plugin</ButtonText>  
-            <CommandName>Timer_Plugin</CommandName>  
-        </Strings>  
-      </Menu>  
-      </Menus>
+    <Menus>
+      <Menu guid="guidTimerWindowPackageCmdSet" id="Toolbar"
+          type="Toolbar" >
+        <CommandFlag>DefaultDocked</CommandFlag>
+        <Strings>
+          <ButtonText>Timer_Plugin</ButtonText>
+          <CommandName>Timer_Plugin</CommandName>
+        </Strings>
+      </Menu>
+    </Menus>
+    
 
     <!-- In this section you can define new menu groups. A menu group is a container for
          other menus or buttons (commands); from a visual point of view you can see the
@@ -66,7 +66,7 @@
       <Button guid="guidTimerWindowPackageCmdSet" id="TimerWindowId" priority="0x0100" type="Button">
         <Parent guid="guidTimerWindowPackageCmdSet" id="ToolbarGroup" />
         <Icon guid="guidImages" id="bmpPic2" />
-         <Strings>
+        <Strings>
           <ButtonText>Time Info</ButtonText>
         </Strings>
       </Button>

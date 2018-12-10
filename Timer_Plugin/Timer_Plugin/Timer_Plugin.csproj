@@ -61,12 +61,18 @@
     <Compile Include="Timer_Window\Data\Converter.cs" />
     <Compile Include="Timer_Window\Data\DataDictionary.cs" />
     <Compile Include="Timer_Window\Data\OpenData.cs" />
-    <Compile Include="Timer_Window\TimerWindow.cs" />
-    <Compile Include="Timer_Window\TimerWindowPackage.cs" />
-    <Compile Include="Timer_Window\Time_Form.cs">
+    <Compile Include="Timer_Window\Forms\DataForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Timer_Window\Time_Form.Designer.cs">
+    <Compile Include="Timer_Window\Forms\DataForm.Designer.cs">
+      <DependentUpon>DataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Timer_Window\TimerWindow.cs" />
+    <Compile Include="Timer_Window\TimerWindowPackage.cs" />
+    <Compile Include="Timer_Window\Forms\Time_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Timer_Window\Forms\Time_Form.Designer.cs">
       <DependentUpon>Time_Form.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -179,7 +185,7 @@
     <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.15.8.122\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Timer_Window\Time_Form.resx">
+    <EmbeddedResource Include="Timer_Window\Forms\Time_Form.resx">
       <DependentUpon>Time_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Timer_Window\VSPackage.resx">

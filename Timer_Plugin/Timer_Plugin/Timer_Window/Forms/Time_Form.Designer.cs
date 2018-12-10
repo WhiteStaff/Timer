@@ -30,7 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Exit_button = new System.Windows.Forms.Button();
+            this.Data_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -52,26 +53,39 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Проведено времени в Visual Studio сегодня:";
             // 
-            // button1
+            // Exit_button
             // 
-            this.button1.Location = new System.Drawing.Point(138, 59);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.Exit_button.Location = new System.Drawing.Point(233, 65);
+            this.Exit_button.Name = "Exit_button";
+            this.Exit_button.Size = new System.Drawing.Size(75, 23);
+            this.Exit_button.TabIndex = 2;
+            this.Exit_button.Text = "Закрыть";
+            this.Exit_button.UseVisualStyleBackColor = true;
+            this.Exit_button.Click += new System.EventHandler(this.Exit_button_Click);
+            // 
+            // Data_button
+            // 
+            this.Data_button.Location = new System.Drawing.Point(12, 65);
+            this.Data_button.Name = "Data_button";
+            this.Data_button.Size = new System.Drawing.Size(75, 23);
+            this.Data_button.TabIndex = 3;
+            this.Data_button.Text = "Сводка";
+            this.Data_button.UseVisualStyleBackColor = true;
+            this.Data_button.Click += new System.EventHandler(this.Data_button_Click);
             // 
             // Time_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 100);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(320, 100);
+            this.Controls.Add(this.Data_button);
+            this.Controls.Add(this.Exit_button);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.HelpButton = true;
             this.Name = "Time_Form";
-            this.Text = "Time_Form";
+            this.Text = "Справка о времени";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Time_Form_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -79,8 +93,9 @@
 
         #endregion
 
-        public System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Exit_button;
+        private System.Windows.Forms.Button Data_button;
     }
 }
