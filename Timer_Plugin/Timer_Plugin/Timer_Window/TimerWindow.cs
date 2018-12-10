@@ -114,7 +114,7 @@ namespace Timer_Plugin.Timer_Window
             {
                 Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();
                 newForm1.Show();
-                
+                               
             }
 
         }

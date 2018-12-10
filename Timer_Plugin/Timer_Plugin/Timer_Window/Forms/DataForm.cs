@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer_Plugin.Timer_Window.Data;
 
 namespace Timer_Plugin.Timer_Window.Forms
 {
@@ -14,7 +15,34 @@ namespace Timer_Plugin.Timer_Window.Forms
     {
         public DataForm()
         {
+            
             InitializeComponent();
+            
+            foreach(var p in DataDictionary.time_dictionary)
+            {
+                var last_value = p.Value;
+                var last_key = p.Key;
+                //copy.Remove(last_key);
+                if (last_key == DateTime.Now.Date)
+                {
+                    last_value += TimerWindowPackage.s.Elapsed.Seconds;
+                }
+                String line = "Дата: " + last_key.Date.ToString("dd/MM/yyyy") + "    Потрачено времени: " + Converter.TimeConverterFromDaysToHours(last_value);
+                listBox1.Items.Add(line);
+            }
+            
+        }
+
+        private void Exit_info_Click(object sender, EventArgs e)
+        {
+            Close();         
+        }
+
+        private void Go_to_timer_Click(object sender, EventArgs e)
+        {
+            Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();
+            newForm1.Show();
+            Close();
         }
     }
 }
