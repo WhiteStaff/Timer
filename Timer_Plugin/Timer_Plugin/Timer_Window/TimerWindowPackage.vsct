@@ -36,8 +36,8 @@
         type="Toolbar" >  
         <CommandFlag>DefaultDocked</CommandFlag>  
         <Strings>  
-            <ButtonText>Test Toolbar</ButtonText>  
-            <CommandName>Test Toolbar</CommandName>  
+            <ButtonText>Timer_Plugin</ButtonText>  
+            <CommandName>Timer_Plugin</CommandName>  
         </Strings>  
       </Menu>  
       </Menus>
@@ -65,9 +65,9 @@
           If you do not want an image next to your command, remove the Icon node /> -->
       <Button guid="guidTimerWindowPackageCmdSet" id="TimerWindowId" priority="0x0100" type="Button">
         <Parent guid="guidTimerWindowPackageCmdSet" id="ToolbarGroup" />
-        <Icon guid="guidImages" id="bmpPic1" />
+        <Icon guid="guidImages" id="bmpPic2" />
          <Strings>
-          <ButtonText></ButtonText>
+          <ButtonText>Time Info</ButtonText>
         </Strings>
       </Button>
     </Buttons>

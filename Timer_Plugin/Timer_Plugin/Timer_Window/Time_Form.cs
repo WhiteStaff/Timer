@@ -25,7 +25,8 @@ namespace Timer_Plugin
 
             if (TimerWindowPackage.IsSolutionOpened)
             {
-                                
+                
+                
                 int current_time = TimerWindowPackage.time + TimerWindowPackage.s.Elapsed.Seconds;
                 current_datetime = Converter.TimeConverterToDate(current_time);
                 label1.Text = current_datetime.ToString("HH:mm:ss");

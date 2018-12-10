@@ -16,5 +16,12 @@ namespace Timer_Plugin.Timer_Window.Data
             correct_time = correct_time.AddSeconds(time_in_sec % 60);
             return correct_time;
         }
+
+        public static int TimeConverterToSec()
+        {
+            int seconds = 0;
+            seconds = DateTime.Now.Hour * 3600 + DateTime.Now.Minute * 60 + DateTime.Now.Second;
+            return seconds;
+        }
     }
 }

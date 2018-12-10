@@ -56,6 +56,7 @@ namespace Timer_Plugin.Timer_Window
         public static Stopwatch s = new Stopwatch();
         public static bool IsSolutionOpened = false;
         public static int time = 0;
+        public static int seconds_to_new_date = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimerWindowPackage"/> class.
@@ -116,6 +117,7 @@ namespace Timer_Plugin.Timer_Window
         {
 
             s.Start();
+            //seconds_to_new_date = Converter.TimeConverterToSec();
             IsSolutionOpened = true;
             time = GetCurrentTime();
             return VSConstants.S_OK;

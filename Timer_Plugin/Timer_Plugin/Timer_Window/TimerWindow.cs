@@ -101,28 +101,16 @@ namespace Timer_Plugin.Timer_Window
         /// <param name="e">Event args.</param>
         /// 
 
-        
+       
         private void Execute(object sender, EventArgs e)
         {
             // System.Timers.Timer aTimer;
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            
-            
-            Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();
-            newForm1.Show();
-           
 
+            
+            Timer_Plugin.Time_Form newForm1 = new Timer_Plugin.Time_Form();            
+            newForm1.Show();            
         }
-        
-
-
-
-
-        /*private void OnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
-        }*/
-        public int sadfg = 0;
     }
 }
