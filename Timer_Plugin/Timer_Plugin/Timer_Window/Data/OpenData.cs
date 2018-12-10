@@ -30,42 +30,61 @@ namespace Timer_Plugin.Timer_Window.Data
     {
 
         static DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Time[]));
-        public static int OpenMyData()
+        public static int OpenMyData(DateTime current_date)
         {
             int TimeData=0;
-            //WriteToFile();
+            bool IsDateExists = false;            
             using (FileStream fs = new FileStream("TimeData.json", FileMode.OpenOrCreate))
             {
                 try
                 {
-                    Time[] newpeople = (Time[])jsonFormatter.ReadObject(fs);
-                    int sfgdsf = 0;
+                    Time[] newpeople = (Time[])jsonFormatter.ReadObject(fs);                    
                     foreach (Time p in newpeople)
                     {
-                        TimeData = p.Mytime;
-                        sfgdsf++;
+                        DataDictionary.time_dictionary.Add(p.Mydate.Date, p.Mytime);
+                        if (p.Mydate.Date == current_date.Date)
+                        {
+                            IsDateExists = true;
+                        }
                     }
                 }
                 catch(Exception e)
                 {
-                    MessageBox.Show(e.Message);
+                    DataDictionary.time_dictionary.Add(DateTime.Now.Date, 0);
+                    IsDateExists = true;
                 }
+            }
+
+            if (!IsDateExists)
+            {
+                DataDictionary.time_dictionary.Add(DateTime.Now.Date, 0);
+                return (0);
             }
 
             return (TimeData);
         }   
 
-        public static void WriteToFile(DateTime date, int data)
+        public static void WriteToFile(int time)
         {
-            /*DateTime date1 = DateTime.Now.Date;
-            DateTime date2 = new DateTime(2008, 3, 1, 7, 0, 0).Date;*/
             
-            Time time1 = new Time(date, data);
-            //Time time2 = new Time(date2, 23842);
-            Time[] times = new Time[] { time1 };
+            Time[] times = new Time[DataDictionary.time_dictionary.Count];
+            DataDictionary.time_dictionary.Remove(DateTime.Now.Date);
+            Time newtime = new Time(DateTime.Now.Date, time);
+            times[0] = newtime;
+            for (int i = 0; i < DataDictionary.time_dictionary.Count; i++)
+            {
+                var last_value = DataDictionary.time_dictionary.Values.Last();
+                var last_key = DataDictionary.time_dictionary.Keys.Last();
+                newtime = new Time(last_key, last_value);
+                times[i+1] = newtime;
+                DataDictionary.time_dictionary.Remove(last_key);
+            }
+
             using (FileStream fs = new FileStream("TimeData.json", FileMode.OpenOrCreate))
             {
+                
                 jsonFormatter.WriteObject(fs, times);
+                
                 
             }
         }

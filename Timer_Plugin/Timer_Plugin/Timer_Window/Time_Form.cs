@@ -21,12 +21,13 @@ namespace Timer_Plugin
         public Time_Form()
         {
             InitializeComponent();
+            
 
             if (TimerWindowPackage.IsSolutionOpened)
             {
-                int current_time = 0;                
-                current_time = TimerWindowPackage.GetCurrentTime();
-                current_datetime = Converter.TimeConverter(current_time);
+                                
+                int current_time = TimerWindowPackage.time + TimerWindowPackage.s.Elapsed.Seconds;
+                current_datetime = Converter.TimeConverterToDate(current_time);
                 label1.Text = current_datetime.ToString("HH:mm:ss");
                 Timer timer = new Timer();
                 timer.Interval = 1000;

@@ -53,8 +53,9 @@ namespace Timer_Plugin.Timer_Window
         /// </summary>
         public const string PackageGuidString = "d8e1aa18-381f-4418-94bb-2bfe851d4203";
         public static int timer_time = 0;
-        private static Stopwatch s = new Stopwatch();
+        public static Stopwatch s = new Stopwatch();
         public static bool IsSolutionOpened = false;
+        public static int time = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimerWindowPackage"/> class.
@@ -74,19 +75,12 @@ namespace Timer_Plugin.Timer_Window
 
         public static int GetCurrentTime()
         {
-            int time = OpenData.OpenMyData();
+            time = OpenData.OpenMyData(DateTime.Now.Date);
             return s.Elapsed.Seconds + time;
             
         }
         
-        public int OnAfterOpenSolution(object pUnkReserved, int fNewSolution)
-        {
-            
-            s.Start();
-            IsSolutionOpened = true;
-            //MessageBox.Show("Opened a solution!");
-            return VSConstants.S_OK;
-        }
+        
 
 
         private void write_tick(object sender)
@@ -116,6 +110,15 @@ namespace Timer_Plugin.Timer_Window
             uint cookie = 0;
             solution.AdviseSolutionEvents(this, out cookie);
 
+        }
+
+        public int OnAfterOpenSolution(object pUnkReserved, int fNewSolution)
+        {
+
+            s.Start();
+            IsSolutionOpened = true;
+            time = GetCurrentTime();
+            return VSConstants.S_OK;
         }
 
         public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
@@ -158,9 +161,8 @@ namespace Timer_Plugin.Timer_Window
         public int OnBeforeCloseSolution(object pUnkReserved)
         {
             s.Stop();
-            IsSolutionOpened = false;
-            int time = OpenData.OpenMyData();
-            OpenData.WriteToFile(DateTime.Now.Date, s.Elapsed.Seconds+time);
+            IsSolutionOpened = false;            
+            OpenData.WriteToFile(s.Elapsed.Seconds+time);
             return VSConstants.S_OK;
         }
 

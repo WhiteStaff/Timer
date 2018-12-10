@@ -8,7 +8,7 @@ namespace Timer_Plugin.Timer_Window.Data
 {
     class Converter
     {
-        public static DateTime TimeConverter(int time_in_sec)
+        public static DateTime TimeConverterToDate(int time_in_sec)
         {
             DateTime correct_time = new DateTime();
             correct_time = correct_time.AddHours(time_in_sec / 3600);
