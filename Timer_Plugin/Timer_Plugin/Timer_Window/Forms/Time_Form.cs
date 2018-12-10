@@ -36,10 +36,8 @@ namespace Timer_Plugin
                 //Расчет времени и отображение в формате HH:mm:ss, конвертируя дни в часы
                 int current_time = TimerWindowPackage.time + TimerWindowPackage.s.Elapsed.Seconds;
                 current_datetime = Converter.TimeConverterToDate(current_time);
-                DateTime help = new DateTime();
-                interval = current_datetime - help;
-                String curr = Math.Round(interval.TotalHours) + ":" + interval.Minutes + ":" + interval.Seconds;
-                label1.Text = curr;  
+                label1.Text = current_datetime.ToString("HH:mm:ss");
+                  
 
                 //Таймер для обновления времени
                 Timer timer = new Timer();
@@ -58,9 +56,8 @@ namespace Timer_Plugin
 
         private void write_tick(object sender, EventArgs e)
         {
-            interval = interval.Add(time_add);
-            String curr = Math.Round(interval.TotalHours) + ":" + interval.Minutes + ":" + interval.Seconds;
-            label1.Text = curr;
+            current_datetime = current_datetime.AddSeconds(1);
+            label1.Text = current_datetime.ToString("HH:mm:ss"); ;
         }
 
         private void Exit_button_Click(object sender, EventArgs e)

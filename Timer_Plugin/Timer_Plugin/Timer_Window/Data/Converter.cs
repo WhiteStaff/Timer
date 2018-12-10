@@ -23,16 +23,6 @@ namespace Timer_Plugin.Timer_Window.Data
             seconds = DateTime.Now.Hour * 3600 + DateTime.Now.Minute * 60 + DateTime.Now.Second;
             return seconds;
         }
-
-        public static String TimeConverterFromDaysToHours(int time_in_sec)
-        {
-            
-            DateTime current_datetime = TimeConverterToDate(time_in_sec);
-            TimeSpan interval = new TimeSpan();
-            DateTime help = new DateTime();
-            interval = current_datetime - help;
-            String curr = Math.Round(interval.TotalHours) + ":" + interval.Minutes + ":" + interval.Seconds;
-            return curr;
-        }
+        
     }
 }

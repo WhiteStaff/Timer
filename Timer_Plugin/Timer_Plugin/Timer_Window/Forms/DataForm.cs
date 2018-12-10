@@ -28,7 +28,7 @@ namespace Timer_Plugin.Timer_Window.Forms
                 {
                     last_value += TimerWindowPackage.s.Elapsed.Seconds;
                 }
-                String line = "Дата: " + last_key.Date.ToString("dd/MM/yyyy") + "    Потрачено времени: " + Converter.TimeConverterFromDaysToHours(last_value);
+                String line = "Дата: " + last_key.Date.ToString("dd/MM/yyyy") + "    Потрачено времени: " + Converter.TimeConverterToDate(last_value).ToString("HH:mm:ss");
                 listBox1.Items.Add(line);
             }
             
