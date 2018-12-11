@@ -16,10 +16,11 @@ namespace Timer_Plugin
 {
     public partial class Time_Form : Form
     {
-        private DateTime current_datetime = new DateTime();
+        
         public static bool IsFormOpen = false;
-        private TimeSpan interval;       
-        private TimeSpan time_add = new TimeSpan(0, 0, 0, 1);
+        int current_time, prev_time;
+
+
         public Time_Form()
         {
 
@@ -32,11 +33,15 @@ namespace Timer_Plugin
                 label1.Visible = true;
                 Data_button.Enabled = true;
                 label2.Text = "Проведено времени в Visual Studio сегодня:";
-
-                //Расчет времени и отображение в формате HH:mm:ss, конвертируя дни в часы
-                int current_time = TimerWindowPackage.time + TimerWindowPackage.s.Elapsed.Seconds;
-                current_datetime = Converter.TimeConverterToDate(current_time);
-                label1.Text = current_datetime.ToString("HH:mm:ss");
+                prev_time = current_time;
+                //Расчет времени
+                current_time = TimerWindowPackage.s.Elapsed.Seconds + TimerWindowPackage.s.Elapsed.Minutes*60 + TimerWindowPackage.s.Elapsed.Hours * 3600;
+                if (TimerWindowPackage.s.Elapsed.Seconds > 60)
+                {
+                    MessageBox.Show(TimerWindowPackage.s.Elapsed.Seconds.ToString());
+                }
+                //current_datetime = Converter.TimeConverterToDate(current_time);
+                label1.Text = Converter.TimeConverterToDate(current_time + TimerWindowPackage.time).ToString("HH:mm:ss");
                   
 
                 //Таймер для обновления времени
@@ -44,6 +49,8 @@ namespace Timer_Plugin
                 timer.Interval = 1000;
                 timer.Enabled = true;
                 timer.Tick += new EventHandler(write_tick);
+
+                
             }
             else
             {
@@ -56,8 +63,19 @@ namespace Timer_Plugin
 
         private void write_tick(object sender, EventArgs e)
         {
-            current_datetime = current_datetime.AddSeconds(1);
-            label1.Text = current_datetime.ToString("HH:mm:ss"); ;
+            if (prev_time < current_time)
+            {
+                prev_time = current_time;
+            }
+
+            current_time++;
+
+            if (prev_time >= current_time)
+            {
+                MessageBox.Show(prev_time.ToString() + "\n" + current_time.ToString());
+            }
+
+            label1.Text = Converter.TimeConverterToDate(current_time + TimerWindowPackage.time).ToString("HH:mm:ss"); ;
         }
 
         private void Exit_button_Click(object sender, EventArgs e)

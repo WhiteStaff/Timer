@@ -26,9 +26,9 @@ namespace Timer_Plugin.Timer_Window.Forms
                 //copy.Remove(last_key);
                 if (last_key == DateTime.Now.Date)
                 {
-                    last_value += TimerWindowPackage.s.Elapsed.Seconds;
+                    last_value += TimerWindowPackage.s.Elapsed.Seconds + TimerWindowPackage.s.Elapsed.Minutes * 60 + TimerWindowPackage.s.Elapsed.Hours * 3600;
                 }
-                String line = "Дата: " + last_key.Date.ToString("dd/MM/yyyy") + "    Потрачено времени: " + Converter.TimeConverterToDate(last_value).ToString("HH:mm:ss");
+                string line = "Дата: " + last_key.Date.ToString("dd/MM/yyyy") + "    Потрачено времени: " + Converter.TimeConverterToDate(last_value).ToString("HH:mm:ss");
                 listBox1.Items.Add(line);
             }
             

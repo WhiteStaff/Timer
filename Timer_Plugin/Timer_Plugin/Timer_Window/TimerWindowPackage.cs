@@ -116,10 +116,9 @@ namespace Timer_Plugin.Timer_Window
         public int OnAfterOpenSolution(object pUnkReserved, int fNewSolution)
         {
 
-            s.Start();
-            //seconds_to_new_date = Converter.TimeConverterToSec();
+            s.Restart();
             IsSolutionOpened = true;
-            time = GetCurrentTime();
+            time = GetCurrentTime();            
             return VSConstants.S_OK;
         }
 
@@ -164,7 +163,8 @@ namespace Timer_Plugin.Timer_Window
         {
             s.Stop();
             IsSolutionOpened = false;            
-            OpenData.WriteToFile(s.Elapsed.Seconds+time);
+            OpenData.WriteToFile(s.Elapsed.Seconds+time + s.Elapsed.Minutes * 60 + s.Elapsed.Hours * 3600);
+            
             return VSConstants.S_OK;
         }
 
